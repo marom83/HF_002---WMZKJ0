@@ -31,3 +31,40 @@ const isValidAdoazon = (adoazon) => {
     return conditional1 && conditional2 && conditional3;
 }
 
+function listControls(){
+    
+    let taj = document.forms["myForm"]["taj"].value;
+    if (!isValidTAJ(taj)) {
+        alert("Hibás TAJ azonosító!");
+        return false;
+    }
+
+    let adoazon = document.forms["myForm"]["adoazon"].value;
+    if (!isValidAdoazon(adoazon)) {
+        alert("Hibás adóazonosító!");
+        return false;
+    }
+
+    var controls = document.querySelectorAll("button, input, select");
+    for (var c of controls) {
+        c.disabled = true;
+    }
+
+    document.getElementById("tableLastName").innerHTML = document.getElementById("lastName").value;
+    document.getElementById("tableFirstName").innerHTML = document.getElementById("firstName").value;
+    document.getElementById("tableBirthDate").innerHTML = document.getElementById("birthDate").value;
+    let maleRadio = document.getElementById("male").checked;
+    document.getElementById("tableSex").innerHTML = maleRadio ? "Férfi" : "Nő";
+
+    document.getElementById("tableTaj").innerHTML = document.getElementById("taj").value;
+    document.getElementById("tableAdoazon").innerHTML = document.getElementById("adoazon").value;
+    document.getElementById("tableIskolaiVegzettseg").innerHTML = document.getElementById("iskolaiVegzettseg").value;
+    document.getElementById("tableOrszag").innerHTML = document.getElementById("orszag").value;
+    document.getElementById("tableMegye").innerHTML = document.getElementById("megye").value;
+    document.getElementById("tableVaros").innerHTML = document.getElementById("varos").value;
+    document.getElementById("tableCim").innerHTML = document.getElementById("cim").value;
+    document.getElementById("tableEmailInfo").innerHTML = document.getElementById("emailInfo").value;
+    document.getElementById("tablePhoneNumber").innerHTML = document.getElementById("phoneNumber").value;
+
+    document.getElementsByTagName("table")[0].style.display = null;
+}

@@ -1,11 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-  <script src="feladatok.js"></script>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="bootstrap.min.css">
 </head>
+
 <body>
 
+  <main>
+    <div class="container mt-5">
+      <form name="myForm" onsubmit="listControls(); return false">
+          <div class="row">
+            <div class="col-md-6 mt-2">
+              <label for="lastName" class="form-label">Vezetéknév</label>
+              <input type="text" name="lastName" title="HU" class="form-control" id="lastName" required>
+            </div>
+            <div class="col-md-6 mt-2">
+              <label for="firstName" class="form-label">Keresztnév</label>
+              <input type="text" name="firstName" title="HU" class="form-control" id="firstName" required>
+            </div>
+            <div class="col-md-6 mt-2">
+              <label for="birthDate" class="form-label">Születési idő</label>
+              <input type="date" name="birthDate" title="HU" class="form-control" id="birthDate"
+                placeholder="1983.09.06.">
+            </div>
+            <div class="col-md-6 mt-2">
+              <p>Neme</p>
+              <div class="form-check-inline">
+                <input type="radio" name="sex" title="HU" class="form-check-input" id="male" value="male" required>
+                <label for="male" class="form-check-label">Férfi</label>
+              </div>
+              <div class="form-check-inline">
+                <input type="radio" name="sex" title="HU" class="form-check-input" id="female" value="female">
+                <label for="female" class="form-check-label">Nő</label>
+              </div>
+            </div>
+            <div class="col-md-6 mt-2">
+              <label for="taj" class="form-label">TAJ szám</label>
+              <input type="text" name="taj" pattern="[A-Za-z0-9]{9}" title="HU" class="form-control" id="taj" required>
+            </div>
+            <div class="col-md-6 mt-2">
+              <label for="adoazon" class="form-label">Adóazonosító</label>
+              <input type="text" name="adoazon" pattern="[A-Za-z0-9]{10}" title="HU" class="form-control" id="adoazon"
+                required>
+            </div>
+            <div class="col-md-6 mt-2">
+              <label for="iskolaiVegzettseg" class="form-label">Legmagasabb iskolai végzettség</label>
+              <select id="iskolaiVegzettseg" class="form-control">
+                <option selected>Kérjük válasszon</option>
+                <option value="1">Középiskola</option>
+                <option value="2">Felsőfokú végzettség</option>
+                <option value="3">Doktori</option>
+              </select>
+            </div>
+            <div class="col-md-6 mt-2">
+              <label for="orszag" class="form-label">Ország</label>
+              <select id="orszag" class="form-control">
+                <option selected>Kérjük válasszon</option>
+                <option value="1">api call</option>
+              </select>
+            </div>
+            <div class="col-md-6 mt-2">
+              <label for="megye" class="form-label">Megye</label>
+              <select id="megye" class="form-control">
+                <option selected>Kérjük válasszon</option>
+                <option value="1">api call</option>
+              </select>
+            </div>
+            <div class="col-md-6 mt-2">
+              <label for="varos" class="form-label">Város</label>
+              <select id="varos" class="form-control">
+                <option selected>Kérjük válasszon</option>
+                <option value="1">api call</option>
+              </select>
+            </div>
+            <div class="col-md-6 mt-2">
+              <label for="cim" class="form-label">Cím</label>
+              <input type="text" name="cim" title="HU" class="form-control" id="cim" required>
+            </div>
+            <div class="col-md-6 mt-2">
+              <label for="emailInfo" class="form-label">E-mail</label>
+              <input type="email" name="emailInfo" title="HU" class="form-control" id="emailInfo" required>
+            </div>
+            <div class="col-md-6 mt-2">
+              <label for="phoneNumber" class="form-label">Telefonszám</label>
+              <input type="tel" name="phoneNumber" title="HU" class="form-control" id="phoneNumber"
+                placeholder="+36 (30) 456 2154">
+            </div>
+            <div class="col-md-12 mt-2">
+              <button type="submit" class="btn btn-success">Elküld</button>
+            </div>
+          </div>
+      </form>
+
+      <table class="table" style="display: none;">
+        <tbody id="body">
+          <tr>
+            <td>Vezetéknév</td>
+            <td id="tableLastName"></td>
+          </tr>
+          <tr>
+            <td>Keresztnév</td>
+            <td id="tableFirstName"></td>
+          </tr>
+          <tr>
+            <td>Születési idő</td>
+            <td id="tableBirthDate"></td>
+          </tr>
+          <tr>
+            <td>Neme</td>
+            <td id="tableSex"></td>
+          </tr>
+          <tr>
+            <td>TAJ szám</td>
+            <td id="tableTaj"></td>
+          </tr>
+          <tr>
+            <td>Adóazonosító</td>
+            <td id="tableAdoazon"></td>
+          </tr>
+          <tr>
+            <td>Legmagasabb iskolai végzettség</td>
+            <td id="tableIskolaiVegzettseg"></td>
+          </tr>
+          <tr>
+            <td>Ország</td>
+            <td id="tableOrszag"></td>
+          </tr>
+          <tr>
+            <td>Megye</td>
+            <td id="tableMegye"></td>
+          </tr>
+          <tr>
+            <td>Város</td>
+            <td id="tableVaros"></td>
+          </tr>
+          <tr>
+            <td>Cím</td>
+            <td id="tableCim"></td>
+          </tr>
+          <tr>
+            <td>E-mail</td>
+            <td id="tableEmailInfo"></td>
+          </tr>
+          <tr>
+            <td>Telefonszám</td>
+            <td id="tablePhoneNumber"></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </main>
+  <script src="feladatok.js"></script>
 </body>
+
 </html>
