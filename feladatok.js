@@ -1,6 +1,6 @@
 const isValidTAJ = (taj) => {
     let sum3 = 0, sum7 = 0;
-    for(let i = 0; i < taj.length-1; i++) {
+    for (let i = 0; i < taj.length - 1; i++) {
         if (i % 2 === 1) {
             sum3 += Number(taj[i]);
         } else {
@@ -17,22 +17,90 @@ const isValidAdoazon = (adoazon) => {
     let conditional1 = Number(adoazon[0]) === 8;
 
     let char26 = Number(adoazon.slice(1, 6));
-    
+
     let char79 = Number(adoazon.slice(7, 9));
 
     let szumma = 0;
-    for(let i=0; i<adoazon.length - 1; i++) {
-        szumma += Number(adoazon[i])*(i+1);
+    for (let i = 0; i < adoazon.length - 1; i++) {
+        szumma += Number(adoazon[i]) * (i + 1);
     }
     let conditional2 = szumma % 11 === Number(adoazon[9]);
-    
+
     let conditional3 = szumma % 11 !== 10;
 
     return conditional1 && conditional2 && conditional3;
+
 }
 
-function listControls(){
-    
+const preFillCountries = async () => {
+    const getCountries = async () => {
+        let response = await fetch("https://location.wlfpt.co/api/v1/countries");
+        const data = await response.json();
+        return data;
+    }
+
+    getCountries().then(countries => {
+        for (country of countries) {
+            const newOption = document.createElement("option");
+            newOption.value = country.sortname;
+            newOption.text = country.name;
+            orszag.appendChild(newOption);
+        }
+    });
+}
+
+const preFillStates = async (orszagKod) => {
+    megye.innerHTML = "";
+    varos.innerHTML = "";
+    const getStates = async () => {
+        let response = await fetch("https://location.wlfpt.co/api/v1/states?filter=" + orszagKod + "&type=code");
+        const data = await response.json();
+        return data;
+    }
+
+    getStates().then(states => {
+        if (states) {
+            for (state of states) {
+                const newOption = document.createElement("option");
+                newOption.value = state.id;
+                newOption.text = state.name;
+                megye.appendChild(newOption);
+            }
+        }
+    });
+}
+
+const preFillCities = async (megyeId) => {
+    varos.innerHTML = "";
+    const getCities = async () => {
+        let response = await fetch("https://location.wlfpt.co/api/v1/cities?filter=" + megyeId + "&type=id");
+        const data = await response.json();
+        return data;
+    }
+
+    getCities().then(cities => {
+        if (cities) {
+            for (city of cities) {
+                const newOption = document.createElement("option");
+                newOption.value = city.id;
+                newOption.text = city.name;
+                varos.appendChild(newOption);
+            }
+        }
+    });
+}
+
+window.onload = (event) => {
+    const orszag = document.getElementById("orszag");
+    const megye = document.getElementById("megye");
+    const varos = document.getElementById("varos");
+    preFillCountries();
+    orszag.onchange = (event) => preFillStates(event.target.value);
+    megye.onchange = (event) => preFillCities(event.target.value);
+};
+
+function listControls() {
+
     let taj = document.forms["myForm"]["taj"].value;
     if (!isValidTAJ(taj)) {
         alert("Hibás TAJ azonosító!");
